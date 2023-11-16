@@ -1,5 +1,7 @@
-FOLDER_NAME = ""
+SAVE_DIRECTORY = "/home/astro/wearable_camera/"
 
-FILE_PREFIX = ""
+FOLDER_NAME = "testing"
+
+FILE_PREFIX = "test"
 
 PICTURE_INTERVAL = 5
