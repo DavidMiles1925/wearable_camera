@@ -1,5 +1,5 @@
-FOLDER_NAME = "pics"
+FOLDER_NAME = ""
 
-FILE_PREFIX = "Testing"
+FILE_PREFIX = ""
 
 PICTURE_INTERVAL = 5
