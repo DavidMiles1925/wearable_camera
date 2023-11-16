@@ -20,7 +20,7 @@ picam2.configure(camera_config)
 
 
 def set_up_folder():
-    folder_time = datetime.now().strftime(".%d.%m.%Y")
+    folder_time = datetime.now().strftime("%d.%m.%Y")
     if os.path.isdir(f"/home/astro/wearable_camera/{FOLDER_NAME}{folder_time}") ==  False:
         os.mkdir(f"/home/astro/wearable_camera/{FOLDER_NAME}{folder_time}")
 
