@@ -52,11 +52,11 @@ def run_camera():
 
     while camera_is_running == True:
 
-        system_time = datetime.now().strftime("%H:%M")
+        system_time = datetime.now().strftime("%H.%M")
 
         pic_counter_str = add_zeros_to_number(pic_counter)
 
-        file_name = f"{FILE_PREFIX}-{pic_counter_str}-[{system_time}].jpg"
+        file_name = f"{FILE_PREFIX}{pic_counter_str}-[{system_time}].jpg"
 
         picam2.capture_file(file_name)
         print(file_name)
