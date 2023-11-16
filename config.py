@@ -1,0 +1,5 @@
+FOLDER_NAME = "pics"
+
+FILE_PREFIX = "Testing"
+
+PICTURE_INTERVAL = 1
