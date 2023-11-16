@@ -4,7 +4,7 @@ from picamera2 import Picamera2, Preview
 import RPi.GPIO as GPIO
 from time import sleep
 
-from config import SAVE_DIRECTORY, FOLDER_NAME, FILE_PREFIX, PICTURE_INTERVAL
+from config import SAVE_DIRECTORY, FOLDER_NAME, FILE_PREFIX, PICTURE_INTERVAL, GREEN_LED_ON, RED_LED_ON
 
 SWITCH_PIN = 27
 
@@ -23,11 +23,13 @@ def set_up_pins():
 
     GPIO.setup(SWITCH_PIN, GPIO.IN)
 
-    GPIO.setup(GREEN_LED_PIN, GPIO.OUT)
-    GPIO.output(GREEN_LED_PIN, GPIO.HIGH)
+    if GREEN_LED_ON:
+        GPIO.setup(GREEN_LED_PIN, GPIO.OUT)
+        GPIO.output(GREEN_LED_PIN, GPIO.HIGH)
 
-    GPIO.setup(RED_LED_PIN, GPIO.OUT)
-    GPIO.output(RED_LED_PIN, GPIO.LOW)
+    if RED_LED_ON:
+        GPIO.setup(RED_LED_PIN, GPIO.OUT)
+        GPIO.output(RED_LED_PIN, GPIO.LOW)
 
 
 def set_up_folder():
@@ -40,8 +42,10 @@ def set_up_folder():
 
     os.chdir(path_str)
 
-def run_camera(pic_counter):
+def run_camera():
 
+    global pic_counter
+    
     camera_is_running = True
 
     picam2.start()
@@ -92,10 +96,12 @@ if __name__ == "__main__":
 
         while True:
             if GPIO.input(SWITCH_PIN) == False:
-                GPIO.output(RED_LED_PIN, GPIO.HIGH)
-                run_camera(pic_counter)
+                if RED_LED_ON:
+                    GPIO.output(RED_LED_PIN, GPIO.HIGH)
+                run_camera()
             else:
-                GPIO.output(RED_LED_PIN, GPIO.LOW)
+                if RED_LED_ON:
+                    GPIO.output(RED_LED_PIN, GPIO.LOW)
 
     except KeyboardInterrupt:
         exit_sequence()
