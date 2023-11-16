@@ -1,7 +1,7 @@
 SAVE_DIRECTORY = "/home/astro/wearable_camera/"
 
-FOLDER_NAME = "testing"
+FOLDER_NAME = "bulbasaur-"
 
-FILE_PREFIX = "test"
+FILE_PREFIX = "bulbasaur-"
 
 PICTURE_INTERVAL = 5

@@ -8,15 +8,26 @@ from config import SAVE_DIRECTORY, FOLDER_NAME, FILE_PREFIX, PICTURE_INTERVAL
 
 SWITCH_PIN = 27
 
-GPIO.setmode(GPIO.BCM)
+GREEN_LED_PIN = 16
+RED_LED_PIN = 21
 
-GPIO.setwarnings(False)
-
-GPIO.setup(SWITCH_PIN, GPIO.IN)
 
 picam2 = Picamera2()
 camera_config = picam2.create_still_configuration()
 picam2.configure(camera_config)
+
+def set_up_pins():
+    GPIO.setmode(GPIO.BCM)
+
+    GPIO.setwarnings(False)
+
+    GPIO.setup(SWITCH_PIN, GPIO.IN)
+
+    GPIO.setup(GREEN_LED_PIN, GPIO.OUT)
+    GPIO.output(GREEN_LED_PIN, GPIO.HIGH)
+
+    GPIO.setup(RED_LED_PIN, GPIO.OUT)
+    GPIO.output(RED_LED_PIN, GPIO.LOW)
 
 
 def set_up_folder():
@@ -36,6 +47,7 @@ def run_camera(pic_counter):
     picam2.start()
 
     while camera_is_running == True:
+
         system_time = datetime.now().strftime("%H:%M")
 
         pic_counter_str = add_zeros_to_number(pic_counter)
@@ -67,20 +79,23 @@ def add_zeros_to_number(num):
 def exit_sequence():
     picam2.close()
     print("camera closed")
+    GPIO.cleanup()
     exit()
 
 if __name__ == "__main__":
     try:
         pic_counter = 0
 
-        number_with_zeros = add_zeros_to_number(12)
-        print(number_with_zeros)
+        set_up_pins()
 
         set_up_folder()
 
         while True:
             if GPIO.input(SWITCH_PIN) == False:
+                GPIO.output(RED_LED_PIN, GPIO.HIGH)
                 run_camera(pic_counter)
+            else:
+                GPIO.output(RED_LED_PIN, GPIO.LOW)
 
     except KeyboardInterrupt:
         exit_sequence()
